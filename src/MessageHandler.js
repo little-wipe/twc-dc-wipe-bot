@@ -12,7 +12,9 @@ function MessageHandler(client) {
     lastReplyTime = new Date();
 
     //console.log('message.reply(getReplayMessage())');
-    message.reply(getReplayMessage());
+    setTimeout(() => {
+      message.reply(getReplayMessage());
+    }, 3000 + (Math.random() * 5000))
   }
 
   function getReplayMessage() {
