@@ -1,10 +1,15 @@
 module.exports = {
 
+  // https://github.com/aiko-chan-ai/discord.js-selfbot-v13?tab=readme-ov-file#get-token-
   token: '',
 
   reply_cooldown_ms: 60 * 1000,
 
   servers: {
+    // Включаем это:
+    // discord->settings->advanced->developer mode
+    // После в контекстном меню будет пункт с копированием id канала
+
 
     // dev
     '1325632600890540095': {
@@ -13,6 +18,16 @@ module.exports = {
         '1325632600890540098'
       ]
     },
+
+    // another server
+    // '00000000000000000': {
+    //   channels: [
+    //     // channel 1
+    //     '11111111111111',
+    //     // channel 2
+    //     '22222222222222',
+    //   ]
+    // },
   },
 
   wipes: {
