@@ -17,6 +17,8 @@ function MessageHandler(client) {
     }, 3000 + (Math.random() * 5000))
   }
 
+  this.getReplayMessage = getReplayMessage;
+
   function getReplayMessage() {
     let getWipe = (server) => Config.getWipes()[server].date.toLocaleDateString('ru-RU');
     let getRef = (server) => Config.getWipes()[server].ref;
