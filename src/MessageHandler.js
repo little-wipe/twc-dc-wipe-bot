@@ -25,15 +25,16 @@ function MessageHandler(client) {
     let getDays = (server) => Math.floor((new Date() - Config.getWipes()[server].date) / (24 * 60 * 60 * 1000));
 
     let dayLength = Math.max(['an', 'surv', 'ob'].map(getDays)).toString().length;
+    let padNum = (num) => num.toString().padStart(dayLength);
 
     return [
       '```txt',
       `Режим       Дата вайпа    Прошло дней`,
-      `Анархия     ${getWipe('an')}    ${getDays('an').toString().padStart(dayLength)}`,
-      `Выживание   ${getWipe('surv')}    ${getDays('surv').toString().padStart(dayLength)}`,
-      `Один Блок   ${getWipe('ob')}    ${getDays('ob').toString().padStart(dayLength)}`,
+      `Анархия     ${getWipe('an')}    ${padNum(getDays('an'))}`,
+      `Выживание   ${getWipe('surv')}    ${padNum(getDays('surv'))}`,
+      `Один Блок   ${getWipe('ob')}    ${padNum(getDays('ob'))}`,
       '```',
-      `Источник: [анархия](${getRef('an')}), [выживание](${getRef('surv')}), [один блок](${getRef('ob')})`
+      `-# Источник: [анархия](${getRef('an')}), [выживание](${getRef('surv')}), [один блок](${getRef('ob')})`
     ].join('\n');
   }
 
