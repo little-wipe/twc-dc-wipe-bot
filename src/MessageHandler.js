@@ -11,7 +11,8 @@ function MessageHandler(client) {
     if (!await isNeedToReply(message)) return;
     lastReplyTime = new Date();
 
-    //console.log('message.reply(getReplayMessage())');
+    message.channel.sendTyping();
+
     setTimeout(() => {
       message.reply(getReplayMessage());
     }, 3000 + (Math.random() * 5000))
