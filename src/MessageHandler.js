@@ -21,22 +21,27 @@ function MessageHandler(client) {
   this.getReplayMessage = getReplayMessage;
 
   function getReplayMessage() {
-    let getWipe = (server) => Config.getWipes()[server].date.toLocaleDateString('ru-RU');
-    let getRef = (server) => Config.getWipes()[server].ref;
-    let getDays = (server) => Math.floor((new Date() - Config.getWipes()[server].date) / (24 * 60 * 60 * 1000));
+    const getWipe = (server) => Config.getWipes()[server].date.toLocaleDateString('ru-RU');
+    const getRef = (server) => Config.getWipes()[server].ref;
+    const getDays = (server) => Math.floor((new Date() - Config.getWipes()[server].date) / (24 * 60 * 60 * 1000));
 
-    let dayLength = Math.max(['an', 'surv', 'ob'].map(getDays)).toString().length;
-    let padNum = (num) => num.toString().padStart(dayLength);
+    const dayLength = Math.max(['an', 'surv', 'ob'].map(getDays)).toString().length;
+    const padNum = (num) => num.toString().padStart(dayLength);
 
+    const colLength = [12, 14, 11];
+    const padCol = (str, i) => str.padEnd(colLength[i], ' ');
+
+    //@formatter:off
     return [
       '```txt',
-      `Режим       Дата вайпа    Прошло дней`,
-      `Анархия     ${getWipe('an')}    ${padNum(getDays('an'))}`,
-      `Выживание   ${getWipe('surv')}    ${padNum(getDays('surv'))}`,
-      `Один Блок   ${getWipe('ob')}    ${padNum(getDays('ob'))}`,
+      ['Режим',      'Дата вайпа',           'Прошло дней'                   ].map(padCol).join(''),
+      ['Анархия',    getWipe('an'),    padNum(getDays('an'))    ].map(padCol).join(''),
+      ['Выживание',  getWipe('surv'),  padNum(getDays('surv'))  ].map(padCol).join(''),
+      ['Один Блок',  getWipe('ob'),    padNum(getDays('ob'))    ].map(padCol).join(''),
       '```',
       `-# Источник: [анархия](${getRef('an')}), [выживание](${getRef('surv')}), [один блок](${getRef('ob')})`
     ].join('\n');
+    //@formatter:on
   }
 
 
