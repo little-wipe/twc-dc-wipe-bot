@@ -42,19 +42,11 @@ function MessageHandler(client) {
 
   async function isNeedToReply(message) {
 
-    let isReplyForMyMessage = await checkIsReplyForMyMessage(message);
     let isMention = message.content.indexOf(`<@${client.user.id}>`) !== -1;
     let isCooldown = new Date() - lastReplyTime < Config.cfg.reply_cooldown_ms;
 
-    return (isReplyForMyMessage || isMention) && !isCooldown;
+    return isMention && !isCooldown;
 
-  }
-
-  async function checkIsReplyForMyMessage(message) {
-    if (message.type !== "REPLY") return false;
-
-    let messageRef = await message.fetchReference();
-    return messageRef?.author?.id === client.user.id;
   }
 }
 
