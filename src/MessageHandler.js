@@ -9,13 +9,19 @@ function MessageHandler(client) {
 
     if (Config.getChannels().indexOf(message.channelId) === -1) return;
     if (!await isNeedToReply(message)) return;
+
+    if (!checkCooldown()) {
+      message.channel.sendTyping();
+
+      setTimeout(() => {
+        message.reply(getReplayMessage());
+      }, 3000 + (Math.random() * 5000));
+    } else {
+      // :stopwatch:
+      message.react('⏱️')
+    }
+
     lastReplyTime = new Date();
-
-    message.channel.sendTyping();
-
-    setTimeout(() => {
-      message.reply(getReplayMessage());
-    }, 3000 + (Math.random() * 5000))
   }
 
   this.getReplayMessage = getReplayMessage;
@@ -46,12 +52,12 @@ function MessageHandler(client) {
 
 
   async function isNeedToReply(message) {
+    // isMention
+    return message.content.indexOf(`<@${client.user.id}>`) !== -1;
+  }
 
-    let isMention = message.content.indexOf(`<@${client.user.id}>`) !== -1;
-    let isCooldown = new Date() - lastReplyTime < Config.cfg.reply_cooldown_ms;
-
-    return isMention && !isCooldown;
-
+  function checkCooldown() {
+    return new Date() - lastReplyTime < Config.cfg.reply_cooldown_ms;
   }
 }
 
