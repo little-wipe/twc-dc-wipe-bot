@@ -1,6 +1,6 @@
 const Config = require('./Config');
 
-function MessageHandler(client) {
+function WipeInfoHandler(client) {
   client.on("messageCreate", handleMessage);
 
   let lastReplyTime = new Date(0);
@@ -61,4 +61,4 @@ function MessageHandler(client) {
   }
 }
 
-module.exports = MessageHandler;
+module.exports = WipeInfoHandler;
