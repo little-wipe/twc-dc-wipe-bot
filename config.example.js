@@ -3,8 +3,18 @@ module.exports = {
   // https://github.com/aiko-chan-ai/discord.js-selfbot-v13?tab=readme-ov-file#get-token-
   token: '',
 
-  reply_cooldown_ms: 60 * 1000,
+  // https://discord.com/channels/909558001239728168/909558001571102784/1333006503157698681
+  potatoReactionModule: false,
+  potatoTeam: {
+    channel: '1237694684743208961',
+    message: '1237696421000515644',
+    userIds: [],
+  },
+  potatoTeamUpdateCooldownMs: 10 * 60 * 1000,
 
+
+  wipeInfoModule: true,
+  replyCooldownMs: 60 * 1000,
   servers: {
     // Включаем это:
     // discord->settings->advanced->developer mode

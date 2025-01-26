@@ -57,7 +57,7 @@ function WipeInfoHandler(client) {
   }
 
   function checkCooldown() {
-    return new Date() - lastReplyTime < Config.cfg.reply_cooldown_ms;
+    return new Date() - lastReplyTime < Config.cfg.replyCooldownMs;
   }
 }
 
