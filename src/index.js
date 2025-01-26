@@ -21,7 +21,10 @@ client.on('ready', async () => {
 
 if (process.argv.indexOf("--dump-msg") !== -1) {
   modules.wipeInfoHandler = new WipeInfoHandler(client);
-  console.log(modules.wipeInfoHandler.getReplayMessage())
+  modules.wipeInfoHandler.getReplayMessage().then(msg => {
+    console.log(msg);
+    process.exit();
+  })
 } else {
   client.login(Config.getToken());
 }

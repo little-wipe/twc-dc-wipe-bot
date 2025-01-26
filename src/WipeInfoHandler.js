@@ -1,4 +1,5 @@
 const Config = require('./Config');
+const DB = require('./Database');
 
 function WipeInfoHandler(client) {
   client.on("messageCreate", handleMessage);
@@ -14,7 +15,7 @@ function WipeInfoHandler(client) {
       message.channel.sendTyping();
 
       setTimeout(() => {
-        message.reply(getReplayMessage());
+        getReplayMessage().then(msg => message.reply(msg));
       }, 3000 + (Math.random() * 5000));
     } else {
       // :stopwatch:
@@ -26,7 +27,7 @@ function WipeInfoHandler(client) {
 
   this.getReplayMessage = getReplayMessage;
 
-  function getReplayMessage() {
+  async function getReplayMessage() {
     const getWipe = (server) => Config.getWipes()[server].date.toLocaleDateString('ru-RU');
     const getRef = (server) => Config.getWipes()[server].ref;
     const getDays = (server) => Math.floor((new Date() - Config.getWipes()[server].date) / (24 * 60 * 60 * 1000));
@@ -34,8 +35,10 @@ function WipeInfoHandler(client) {
     const dayLength = Math.max(['an', 'surv', 'ob'].map(getDays)).toString().length;
     const padNum = (num) => num.toString().padStart(dayLength);
 
-    const colLength = [12, 14, 11];
-    const padCol = (str, i) => str.padEnd(colLength[i], ' ');
+    const colLength = [13, 14, 12];
+    const padCol = (str, i) => str.toString().padEnd(colLength[i], ' ');
+
+    let potatoCount = await DB.getPotatoCount();
 
     //@formatter:off
     return [
@@ -44,8 +47,17 @@ function WipeInfoHandler(client) {
       ['Анархия',    getWipe('an'),    padNum(getDays('an'))    ].map(padCol).join(''),
       ['Выживание',  getWipe('surv'),  padNum(getDays('surv'))  ].map(padCol).join(''),
       ['Один Блок',  getWipe('ob'),    padNum(getDays('ob'))    ].map(padCol).join(''),
+      '',
+      ['Бунд',          'Начало',              'Прошло дней',          'Картошек'   ].map(padCol).join(''),
+      ['Картофельный',  getWipe('pot'),  getDays('pot'),  potatoCount  ].map(padCol).join(''),
       '```',
-      `-# Источник: [анархия](${getRef('an')}), [выживание](${getRef('surv')}), [один блок](${getRef('ob')})`
+      [
+        `-# Источник:`,
+        `[анархия](${getRef('an')}),`,
+        `[выживание](${getRef('surv')}),`,
+        `[один блок](${getRef('ob')}),`,
+        `[картофельный бунд](${getRef('pot')})`,
+      ].join(' ')
     ].join('\n');
     //@formatter:on
   }

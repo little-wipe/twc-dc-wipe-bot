@@ -1,4 +1,5 @@
 const Config = require('./Config');
+const DB = require('./Database');
 
 function PotatoReactionHandler(client) {
   client.on("messageCreate", handleMessage);
@@ -8,6 +9,7 @@ function PotatoReactionHandler(client) {
     if ((await getTeamList()).indexOf(message.author.id) === -1) return;
 
     setTimeout(() => {
+      DB.incrementPotato();
       message.react(getReaction());
     }, 1000 + Math.random() * 10000);
   }
