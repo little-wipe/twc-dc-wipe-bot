@@ -55,10 +55,5 @@ module.exports = {
       date: new Date('2024-04-20 23:03'),
       ref: 'https://discord.com/channels/909558001239728168/919126373027692544/1231334445739671675'
     },
-
-    pot: {
-      date: new Date('2025-01-26 12:31'),
-      ref: 'https://discord.com/channels/909558001239728168/909558001571102784/1333006503157698681'
-    }
   }
 }

@@ -1,5 +1,4 @@
 const Config = require('./Config');
-const DB = require('./Database');
 
 function WipeInfoHandler(client) {
   client.on("messageCreate", handleMessage);
@@ -38,8 +37,6 @@ function WipeInfoHandler(client) {
     const colLength = [13, 14, 12];
     const padCol = (str, i) => str.toString().padEnd(colLength[i], ' ');
 
-    let potatoCount = await DB.getPotatoCount();
-
     //@formatter:off
     return [
       '```txt',
@@ -47,21 +44,23 @@ function WipeInfoHandler(client) {
       ['Анархия',    getWipe('an'),    padNum(getDays('an'))    ].map(padCol).join(''),
       ['Выживание',  getWipe('surv'),  padNum(getDays('surv'))  ].map(padCol).join(''),
       ['Один Блок',  getWipe('ob'),    padNum(getDays('ob'))    ].map(padCol).join(''),
-      '',
-      ['Бунд',          'Начало',              'Прошло дней',          'Картошек'   ].map(padCol).join(''),
-      ['Картофельный',  getWipe('pot'),  getDays('pot'),  potatoCount  ].map(padCol).join(''),
       '```',
       [
         `-# Источник:`,
         `[анархия](${getRef('an')}),`,
         `[выживание](${getRef('surv')}),`,
         `[один блок](${getRef('ob')}),`,
-        `[картофельный бунд](${getRef('pot')})`,
+        getPotatoReactionSourceLine(),
       ].join(' ')
     ].join('\n');
     //@formatter:on
   }
 
+  function getPotatoReactionSourceLine() {
+    const startMsg = "https://discord.com/channels/909558001239728168/909558001571102784/1333006503157698681";
+    const endMsg = "https://discord.com/channels/909558001239728168/909558001571102784/1334864694833451048";
+    return `[картофельный бунд](${startMsg})([победа](${endMsg}))`;
+  }
 
   async function isNeedToReply(message) {
     // isMention
